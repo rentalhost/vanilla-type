@@ -6,9 +6,10 @@ namespace Rentalhost\Vanilla\Type;
 
 use ArrayAccess;
 use Countable;
+use JsonSerializable;
 
 abstract class TypeArray
-    implements ArrayAccess, Countable
+    implements ArrayAccess, Countable, JsonSerializable
 {
     public static string $castTo;
 
@@ -45,6 +46,11 @@ abstract class TypeArray
     public function items(): array
     {
         return $this->items;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return $this->items();
     }
 
     public function offsetExists($key): bool

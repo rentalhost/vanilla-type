@@ -110,6 +110,9 @@ class TypeTest
     {
         $type = self::getUserType();
 
-        static::assertSame(json_encode(self::getUserTypeAttributes(), JSON_THROW_ON_ERROR), $type->toJson());
+        static::assertSame(
+            json_encode(self::getUserTypeAttributes(), JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT),
+            json_encode($type, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT)
+        );
     }
 }

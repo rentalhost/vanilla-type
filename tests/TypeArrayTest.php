@@ -50,6 +50,16 @@ class TypeArrayTest
         static::assertFalse(isset($type->preferredNumbers[0]));
     }
 
+    public function testJsonSerializable(): void
+    {
+        $type = self::getUserType();
+
+        static::assertSame(
+            json_encode(self::getUserTypeAttributes()['preferredNumbers'], JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT),
+            json_encode($type->preferredNumbers, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT)
+        );
+    }
+
     public function testOffsetExists(): void
     {
         $type = self::getUserType();
