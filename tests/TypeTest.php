@@ -7,6 +7,7 @@ namespace Rentalhost\Vanilla\Type\Tests;
 use PHPUnit\Framework\TestCase;
 use Rentalhost\Vanilla\Type\Tests\Fixture\Traits\UserTypeExampleTrait;
 use Rentalhost\Vanilla\Type\Tests\Fixture\Types\ColorType;
+use Rentalhost\Vanilla\Type\Tests\Fixture\Types\NonType;
 use Rentalhost\Vanilla\Type\TypeArray;
 
 class TypeTest
@@ -104,6 +105,16 @@ class TypeTest
 
         static::assertNull($type->parent);
         static::assertSame($type, $type->preferredColor->parent);
+    }
+
+    public function testParentNonType(): void
+    {
+        $type = self::getUserType();
+
+        static::assertInstanceOf(NonType::class, $type->nonType);
+
+        // NonType will have not access to parent instance becaus it is a non Type, in fact.
+        static::assertFalse(property_exists($type->nonType, 'parent'));
     }
 
     public function testToJson(): void

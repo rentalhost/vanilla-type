@@ -16,6 +16,8 @@ use Rentalhost\Vanilla\Type\TypeArray;
  *
  * @property null                   $undefinedKey
  *
+ * @property NonType                $nonType
+ *
  * @method self basicBoolean(bool $basicBoolean = true)
  */
 class UserType
@@ -26,6 +28,7 @@ class UserType
     ];
 
     protected static ?array $casts = [
-        'preferredColor' => ColorType::class
+        'preferredColor' => ColorType::class,
+        'nonType'        => NonType::class
     ];
 }

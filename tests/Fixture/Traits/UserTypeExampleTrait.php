@@ -16,6 +16,7 @@ trait UserTypeExampleTrait
     private static function getUserTypeAttributes(): array
     {
         return [
+            'nonType'          => true,
             'basicString'      => 'hello',
             'preferredColor'   => [ 'name' => 'red' ],
             'preferredNumbers' => [

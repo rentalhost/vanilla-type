@@ -38,9 +38,12 @@ abstract class Type
     {
         $value = $this->attributes[$key];
 
-        /** @var self|TypeArray $processedValue */
-        $processedValue         = new $usingCastsArray[$key]($value);
-        $processedValue->parent = $this;
+        $processedValue = new $usingCastsArray[$key]($value);
+
+        if ($processedValue instanceof self ||
+            $processedValue instanceof TypeArray) {
+            $processedValue->parent = $this;
+        }
 
         return $this->attributesProcessed[$key] = $processedValue;
     }
