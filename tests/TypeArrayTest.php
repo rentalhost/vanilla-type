@@ -50,6 +50,13 @@ class TypeArrayTest
         static::assertFalse(isset($type->preferredNumbers[0]));
     }
 
+    public function testIterator(): void
+    {
+        foreach (self::getUserType()->preferredNumbers as $preferredNumber) {
+            static::assertIsInt($preferredNumber->number);
+        }
+    }
+
     public function testJsonSerializable(): void
     {
         $type = self::getUserType();

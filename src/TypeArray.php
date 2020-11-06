@@ -6,10 +6,11 @@ namespace Rentalhost\Vanilla\Type;
 
 use ArrayAccess;
 use Countable;
+use Iterator;
 use JsonSerializable;
 
 abstract class TypeArray
-    implements ArrayAccess, Countable, JsonSerializable
+    implements ArrayAccess, Countable, JsonSerializable, Iterator
 {
     public static string $castTo;
 
@@ -29,6 +30,31 @@ abstract class TypeArray
     public function count(): int
     {
         return count($this->items);
+    }
+
+    public function current()
+    {
+        return $this->offsetGet(key($this->items));
+    }
+
+    public function next(): void
+    {
+        next($this->items);
+    }
+
+    public function key(): string
+    {
+        return key($this->items);
+    }
+
+    public function valid(): bool
+    {
+        return key($this->items) !== null;
+    }
+
+    public function rewind(): void
+    {
+        reset($this->items);
     }
 
     /**
