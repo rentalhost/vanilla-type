@@ -1,0 +1,34 @@
+{
+    "name": "rentalhost/vanilla-type",
+    "description": "Nested type library.",
+    "type": "library",
+    "license": "MIT",
+
+    "authors": [
+        {
+            "name": "David Rodrigues",
+            "email": "david.rodrigues@rentalhost.net"
+        }
+    ],
+
+    "autoload": {
+        "psr-4": {
+            "Rentalhost\\Vanilla\\Type\\": "src/"
+        }
+    },
+
+    "autoload-dev": {
+        "psr-4": {
+            "Rentalhost\\Vanilla\\Type\\Tests\\": "tests/"
+        }
+    },
+
+    "require": {
+        "php": ">=7.4",
+        "ext-json": "*"
+    },
+
+    "require-dev": {
+        "phpunit/phpunit": "^9.4"
+    }
+}
