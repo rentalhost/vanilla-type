@@ -102,6 +102,7 @@ class TypeTest
     {
         $type = self::getUserType();
 
+        static::assertNull($type->parent);
         static::assertSame($type, $type->preferredColor->parent);
     }
 

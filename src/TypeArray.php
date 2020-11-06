@@ -5,9 +5,10 @@ declare(strict_types = 1);
 namespace Rentalhost\Vanilla\Type;
 
 use ArrayAccess;
+use Countable;
 
 abstract class TypeArray
-    implements ArrayAccess
+    implements ArrayAccess, Countable
 {
     public static string $castTo;
 

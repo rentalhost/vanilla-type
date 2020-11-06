@@ -17,6 +17,7 @@ class TypeArrayTest
     {
         $type = self::getUserType();
 
+        static::assertCount(3, $type->preferredNumbers);
         static::assertCount(3, $type->preferredNumbers->items());
         static::assertSame(3, $type->preferredNumbers->count());
     }
