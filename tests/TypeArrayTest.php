@@ -100,4 +100,26 @@ class TypeArrayTest
         static::assertSame($type->preferredNumbers, $type->preferredNumbers[0]->parent);
         static::assertSame($type, $type->preferredNumbers[0]->parent->parent);
     }
+
+    public function testSetWithReprocessing(): void
+    {
+        $type = self::getUserType();
+
+        static::assertSame(1, $type->preferredNumbers[0]->number);
+
+        $type->preferredNumbers[0] = [ 'number' => 2 ];
+
+        static::assertSame(2, $type->preferredNumbers[0]->number);
+    }
+
+    public function testUnsetWithReprocessing(): void
+    {
+        $type = self::getUserType();
+
+        static::assertSame(1, $type->preferredNumbers[0]->number);
+
+        unset($type->preferredNumbers[0]);
+
+        static::assertNull($type->preferredNumbers[0]);
+    }
 }

@@ -79,36 +79,38 @@ abstract class TypeArray
         return $this->items();
     }
 
-    public function offsetExists($key): bool
+    public function offsetExists($offset): bool
     {
-        return array_key_exists($key, $this->items);
+        return array_key_exists($offset, $this->items);
     }
 
-    public function offsetGet($key)
+    public function offsetGet($offset)
     {
-        if (!$this->offsetExists($key)) {
+        if (!$this->offsetExists($offset)) {
             return null;
         }
 
-        if ($this->wasProcessed($key)) {
-            return $this->itemsProcessed[$key];
+        if ($this->wasProcessed($offset)) {
+            return $this->itemsProcessed[$offset];
         }
 
         /** @var Type $valueCasted */
-        $valueCasted         = new static::$castTo($this->items[$key]);
+        $valueCasted         = new static::$castTo($this->items[$offset]);
         $valueCasted->parent = $this;
 
-        return $this->itemsProcessed[$key] = $valueCasted;
+        return $this->itemsProcessed[$offset] = $valueCasted;
     }
 
-    public function offsetSet($key, $value): void
+    public function offsetSet($offset, $value): void
     {
-        $this->items[$key] = $value;
+        $this->items[$offset] = $value;
+
+        unset($this->itemsProcessed[$offset]);
     }
 
-    public function offsetUnset($key): void
+    public function offsetUnset($offset): void
     {
-        unset($this->items[$key]);
+        unset($this->items[$offset]);
     }
 
     public function wasProcessed($key): bool
