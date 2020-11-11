@@ -117,6 +117,17 @@ class TypeTest
         static::assertFalse(property_exists($type->nonType, 'parent'));
     }
 
+    public function testSetWithReprocessing(): void
+    {
+        $type = self::getUserType();
+
+        static::assertSame('red', $type->preferredColor->name);
+
+        $type->preferredColor = [ 'name' => 'blue' ];
+
+        static::assertSame('blue', $type->preferredColor->name);
+    }
+
     public function testToJson(): void
     {
         $type = self::getUserType();
@@ -125,5 +136,16 @@ class TypeTest
             json_encode(self::getUserTypeAttributes(), JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT),
             json_encode($type, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT)
         );
+    }
+
+    public function testUnsetWithReprocessing(): void
+    {
+        $type = self::getUserType();
+
+        static::assertSame('red', $type->preferredColor->name);
+
+        unset($type->preferredColor);
+
+        static::assertNull($type->preferredColor);
     }
 }

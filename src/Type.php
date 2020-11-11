@@ -133,6 +133,8 @@ abstract class Type
     public function offsetSet($offset, $value): void
     {
         $this->attributes[$offset] = $value;
+
+        unset($this->attributesProcessed[$offset]);
     }
 
     /** @param string $offset */
