@@ -36,6 +36,18 @@ class TypeTest
         static::assertFalse($type->basicBoolean);
     }
 
+    public function testCopy(): void
+    {
+        $type                       = self::getUserType();
+        $type->preferredColor->name = 'redOriginal';
+
+        $typeCopy                       = $type->copy();
+        $typeCopy->preferredColor->name = 'redCopy';
+
+        static::assertSame('redOriginal', $type->preferredColor->name);
+        static::assertSame('redCopy', $typeCopy->preferredColor->name);
+    }
+
     public function testGetAttributes(): void
     {
         $type = self::getUserType();

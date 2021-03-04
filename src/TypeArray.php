@@ -36,6 +36,11 @@ abstract class TypeArray
         }
     }
 
+    public function copy(): self
+    {
+        return new static($this->toArray());
+    }
+
     public function count(): int
     {
         return count($this->items);

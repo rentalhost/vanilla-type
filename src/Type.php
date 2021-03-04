@@ -87,6 +87,11 @@ abstract class Type
         $this->offsetUnset($key);
     }
 
+    public function copy(): self
+    {
+        return new static($this->toArray());
+    }
+
     /** @return mixed */
     public function get(string $key, $default = null)
     {

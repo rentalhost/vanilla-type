@@ -13,6 +13,18 @@ class TypeArrayTest
 {
     use UserTypeExampleTrait;
 
+    public function testCopy(): void
+    {
+        $preferredNumbers            = self::getUserType()->preferredNumbers;
+        $preferredNumbers[0]->number = 999;
+
+        $preferredNumbersCopy            = $preferredNumbers->copy();
+        $preferredNumbersCopy[0]->number = 888;
+
+        static::assertSame(999, $preferredNumbers[0]->number);
+        static::assertSame(888, $preferredNumbersCopy[0]->number);
+    }
+
     public function testCount(): void
     {
         $type = self::getUserType();
