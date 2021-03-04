@@ -48,6 +48,16 @@ abstract class Type
         return $this->attributesProcessed[$key] = $processedValue;
     }
 
+    private function syncAttributes(): void
+    {
+        foreach ($this->attributesProcessed as $attributeKey => $attribute) {
+            if ($attribute instanceof self ||
+                $attribute instanceof TypeArray) {
+                $this->attributes[$attributeKey] = $attribute->toArray();
+            }
+        }
+    }
+
     public function __call(string $method, array $parameters): self
     {
         $this->attributes[$method] = count($parameters) > 0 ? $parameters[0] : true;
@@ -119,6 +129,7 @@ abstract class Type
 
     /**
      * @param string $offset
+     *
      * @return mixed
      */
     public function offsetGet($offset)
@@ -146,6 +157,8 @@ abstract class Type
     /** @return array|mixed[] */
     public function toArray(): array
     {
+        $this->syncAttributes();
+
         return $this->attributes;
     }
 

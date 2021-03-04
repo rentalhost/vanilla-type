@@ -18,7 +18,7 @@ class TypeArrayTest
         $type = self::getUserType();
 
         static::assertCount(3, $type->preferredNumbers);
-        static::assertCount(3, $type->preferredNumbers->items());
+        static::assertCount(3, $type->preferredNumbers->toArray());
         static::assertSame(3, $type->preferredNumbers->count());
     }
 
@@ -110,6 +110,17 @@ class TypeArrayTest
         $type->preferredNumbers[0] = [ 'number' => 2 ];
 
         static::assertSame(2, $type->preferredNumbers[0]->number);
+    }
+
+    public function testToArrayAfterNestedSet(): void
+    {
+        $type                              = self::getUserType();
+        $type->preferredNumbers[0]->number = 4;
+
+        static::assertSame(4, $type->preferredNumbers[0]->number);
+
+        static::assertNotSame(self::getUserType()->toArray(), $type->toArray());
+        static::assertNotSame(self::getUserType()->toJson(), $type->toJson());
     }
 
     public function testUnsetWithReprocessing(): void

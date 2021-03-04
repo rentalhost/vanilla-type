@@ -128,6 +128,17 @@ class TypeTest
         static::assertSame('blue', $type->preferredColor->name);
     }
 
+    public function testToArrayAfterNestedSet(): void
+    {
+        $type                       = self::getUserType();
+        $type->preferredColor->name = 'blue';
+
+        static::assertSame('blue', $type->preferredColor->name);
+
+        static::assertNotSame(self::getUserType()->toArray(), $type->toArray());
+        static::assertNotSame(self::getUserType()->toJson(), $type->toJson());
+    }
+
     public function testToJson(): void
     {
         $type = self::getUserType();

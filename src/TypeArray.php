@@ -27,6 +27,15 @@ abstract class TypeArray
         $this->items = $items ?? [];
     }
 
+    private function syncItems(): void
+    {
+        foreach ($this->itemsProcessed as $itemKey => $item) {
+            if ($item instanceof Type) {
+                $this->items[$itemKey] = $item->toArray();
+            }
+        }
+    }
+
     public function count(): int
     {
         return count($this->items);
@@ -69,14 +78,9 @@ abstract class TypeArray
         return $default;
     }
 
-    public function items(): array
-    {
-        return $this->items;
-    }
-
     public function jsonSerialize(): array
     {
-        return $this->items();
+        return $this->toArray();
     }
 
     public function offsetExists($offset): bool
@@ -111,6 +115,13 @@ abstract class TypeArray
     public function offsetUnset($offset): void
     {
         unset($this->items[$offset]);
+    }
+
+    public function toArray(): array
+    {
+        $this->syncItems();
+
+        return $this->items;
     }
 
     public function wasProcessed($key): bool
