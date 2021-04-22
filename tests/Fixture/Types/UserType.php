@@ -24,11 +24,11 @@ class UserType
     extends Type
 {
     protected static ?array $arrayCasts = [
-        'preferredNumbers' => NumberTypeArray::class
+        'preferredNumbers' => NumberTypeArray::class,
     ];
 
     protected static ?array $casts = [
         'preferredColor' => ColorType::class,
-        'nonType'        => NonType::class
+        'nonType'        => NonType::class,
     ];
 }
