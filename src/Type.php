@@ -6,10 +6,14 @@ namespace Rentalhost\Vanilla\Type;
 
 use ArrayAccess;
 use JsonSerializable;
+use Rentalhost\Vanilla\Type\Interfaces\ConstructorWithParentInterface;
+use Rentalhost\Vanilla\Type\Traits\ConstructorWithParentTrait;
 
 abstract class Type
-    implements ArrayAccess, JsonSerializable
+    implements ArrayAccess, JsonSerializable, ConstructorWithParentInterface
 {
+    use ConstructorWithParentTrait;
+
     /** @var string[]|null */
     protected static ?array $arrayCasts = null;
 
@@ -36,16 +40,14 @@ abstract class Type
 
     private function processType(string $key, array $usingCastsArray)
     {
-        $value = $this->attributes[$key];
+        $castClass = $usingCastsArray[$key];
+        $castValue = $this->attributes[$key];
 
-        $processedValue = new $usingCastsArray[$key]($value);
+        $castInstance = is_a($castClass, ConstructorWithParentInterface::class, true)
+            ? self::constructWithParent($castClass, $this, $castValue)
+            : new $castClass($castValue);
 
-        if ($processedValue instanceof self ||
-            $processedValue instanceof TypeArray) {
-            $processedValue->parent = $this;
-        }
-
-        return $this->attributesProcessed[$key] = $processedValue;
+        return $this->attributesProcessed[$key] = $castInstance;
     }
 
     private function syncAttributes(): void

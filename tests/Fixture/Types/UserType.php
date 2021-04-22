@@ -8,15 +8,18 @@ use Rentalhost\Vanilla\Type\Type;
 use Rentalhost\Vanilla\Type\TypeArray;
 
 /**
- * @property string|null            $basicString
- * @property bool|null              $basicBoolean
+ * @property string|null             $basicString
+ * @property bool|null               $basicBoolean
  *
- * @property ColorType|null         $preferredColor
- * @property TypeArray|NumberType[] $preferredNumbers
+ * @property ColorType|null          $preferredColor
+ * @property TypeArray|NumberType[]  $preferredNumbers
  *
- * @property null                   $undefinedKey
+ * @property null                    $undefinedKey
  *
- * @property NonType                $nonType
+ * @property NonType                 $nonType
+ *
+ * @property ParentAccessType        $parentAccess
+ * @property ParentAccessesTypeArray $parentAccesses
  *
  * @method self basicBoolean(bool $basicBoolean = true)
  */
@@ -25,10 +28,12 @@ class UserType
 {
     protected static ?array $arrayCasts = [
         'preferredNumbers' => NumberTypeArray::class,
+        'parentAccesses'   => ParentAccessesTypeArray::class,
     ];
 
     protected static ?array $casts = [
         'preferredColor' => ColorType::class,
         'nonType'        => NonType::class,
+        'parentAccess'   => ParentAccessType::class,
     ];
 }

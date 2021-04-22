@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Rentalhost\Vanilla\Type\Tests\Fixture\Traits\UserTypeExampleTrait;
 use Rentalhost\Vanilla\Type\Tests\Fixture\Types\ColorType;
 use Rentalhost\Vanilla\Type\Tests\Fixture\Types\NonType;
+use Rentalhost\Vanilla\Type\Tests\Fixture\Types\UserType;
 use Rentalhost\Vanilla\Type\TypeArray;
 
 class TypeTest
@@ -117,6 +118,13 @@ class TypeTest
 
         static::assertNull($type->parent);
         static::assertSame($type, $type->preferredColor->parent);
+    }
+
+    public function testParentAccessConstructor(): void
+    {
+        $type = self::getUserType();
+
+        static::assertSame(UserType::class, $type->parentAccess->parentClass, 'parent instance must be available at constructor');
     }
 
     public function testParentNonType(): void

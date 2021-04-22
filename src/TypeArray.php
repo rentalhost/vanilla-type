@@ -8,10 +8,15 @@ use ArrayAccess;
 use Countable;
 use Iterator;
 use JsonSerializable;
+use Rentalhost\Vanilla\Type\Interfaces\ConstructorWithParentInterface;
+use Rentalhost\Vanilla\Type\Traits\ConstructorWithParentTrait;
 
 abstract class TypeArray
-    implements ArrayAccess, Countable, JsonSerializable, Iterator
+    implements ArrayAccess, Countable, JsonSerializable, Iterator, ConstructorWithParentInterface
 {
+    use ConstructorWithParentTrait;
+
+    /** @var string|Type */
     public static string $castTo;
 
     protected array $items;
@@ -103,11 +108,7 @@ abstract class TypeArray
             return $this->itemsProcessed[$offset];
         }
 
-        /** @var Type $valueCasted */
-        $valueCasted         = new static::$castTo($this->items[$offset]);
-        $valueCasted->parent = $this;
-
-        return $this->itemsProcessed[$offset] = $valueCasted;
+        return $this->itemsProcessed[$offset] = static::$castTo::constructWithParent(static::$castTo, $this, $this->items[$offset]);
     }
 
     public function offsetSet($offset, $value): void

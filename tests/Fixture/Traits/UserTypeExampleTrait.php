@@ -24,6 +24,8 @@ trait UserTypeExampleTrait
                 [ 'number' => 2 ],
                 [ 'number' => 3 ],
             ],
+            'parentAccess'     => [],
+            'parentAccesses'   => [],
         ];
     }
 }

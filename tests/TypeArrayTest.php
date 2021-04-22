@@ -7,6 +7,7 @@ namespace Rentalhost\Vanilla\Type\Tests;
 use PHPUnit\Framework\TestCase;
 use Rentalhost\Vanilla\Type\Tests\Fixture\Traits\UserTypeExampleTrait;
 use Rentalhost\Vanilla\Type\Tests\Fixture\Types\NumberType;
+use Rentalhost\Vanilla\Type\Tests\Fixture\Types\UserType;
 
 class TypeArrayTest
     extends TestCase
@@ -111,6 +112,13 @@ class TypeArrayTest
         static::assertSame($type, $type->preferredNumbers->parent);
         static::assertSame($type->preferredNumbers, $type->preferredNumbers[0]->parent);
         static::assertSame($type, $type->preferredNumbers[0]->parent->parent);
+    }
+
+    public function testParentAccessConstructor(): void
+    {
+        $type = self::getUserType();
+
+        static::assertSame(UserType::class, $type->parentAccesses->parentClass, 'parent instance must be available at constructor');
     }
 
     public function testSetWithReprocessing(): void
