@@ -20,7 +20,7 @@ abstract class Type
     /** @var string[]|null */
     protected static ?array $casts = null;
 
-    /** @var array|mixed[] */
+    /** @var array[] */
     protected array $attributes = [];
 
     /** @var array|object[] */
@@ -116,13 +116,13 @@ abstract class Type
         return $this->attributes[$key];
     }
 
-    /** @return array|mixed[] */
+    /** @return array[] */
     public function getAttributes(): array
     {
         return $this->toArray();
     }
 
-    /** @return array|mixed[] */
+    /** @return array[] */
     public function jsonSerialize(): array
     {
         return $this->toArray();
@@ -161,7 +161,7 @@ abstract class Type
         unset($this->attributes[$offset]);
     }
 
-    /** @return array|mixed[] */
+    /** @return array[] */
     public function toArray(): array
     {
         $this->syncAttributes();
