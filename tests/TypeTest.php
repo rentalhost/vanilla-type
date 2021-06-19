@@ -171,8 +171,9 @@ class TypeTest
         $type = self::getUserType();
 
         static::assertInstanceOf(NonType::class, $type->nonType);
+        static::assertSame('123', $type->nonTypeCallable);
 
-        // NonType will have not access to parent instance becaus it is a non Type, in fact.
+        // NonType will have not access to parent instance because it is a non Type, in fact.
         static::assertFalse(property_exists($type->nonType, 'parent'));
     }
 

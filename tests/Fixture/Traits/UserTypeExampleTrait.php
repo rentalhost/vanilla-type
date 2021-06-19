@@ -17,6 +17,7 @@ trait UserTypeExampleTrait
     {
         return [
             'nonType'          => true,
+            'nonTypeCallable'  => 123,
             'basicString'      => 'hello',
             'preferredColor'   => [ 'name' => 'red' ],
             'preferredNumbers' => [

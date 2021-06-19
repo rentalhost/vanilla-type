@@ -17,6 +17,7 @@ use Rentalhost\Vanilla\Type\TypeArray;
  * @property null                    $undefinedKey
  *
  * @property NonType                 $nonType
+ * @property int                     $nonTypeCallable
  *
  * @property ParentAccessType        $parentAccess
  * @property ParentAccessesTypeArray $parentAccesses
@@ -32,8 +33,9 @@ class UserType
     ];
 
     protected static ?array $casts = [
-        'preferredColor' => ColorType::class,
-        'nonType'        => NonType::class,
-        'parentAccess'   => ParentAccessType::class,
+        'preferredColor'  => ColorType::class,
+        'nonType'         => NonType::class,
+        'nonTypeCallable' => 'strval',
+        'parentAccess'    => ParentAccessType::class,
     ];
 }

@@ -82,11 +82,14 @@ abstract class Type
             return $this->attributesProcessed[$key] = self::processNativeType($castClass, $castValue);
         }
 
-        $castInstance = is_a($castClass, ConstructorWithParentInterface::class, true)
-            ? self::constructWithParent($castClass, $this, $castValue)
-            : new $castClass($castValue);
+        if (is_callable($castClass)) {
+            return $this->attributesProcessed[$key] = $castClass($castValue);
+        }
 
-        return $this->attributesProcessed[$key] = $castInstance;
+        return $this->attributesProcessed[$key] =
+            is_a($castClass, ConstructorWithParentInterface::class, true)
+                ? self::constructWithParent($castClass, $this, $castValue)
+                : new $castClass($castValue);
     }
 
     private function syncAttributes(): void
