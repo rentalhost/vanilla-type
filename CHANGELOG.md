@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.7] - 2021-06-19
+
+### Added
+
+- `Type::$casts` now supports casts to native types when value is *non-null* (*string*, *int* or *integer*, *float* or *double*, *bool* or *boolean*, *array*, *object*, *null*). The type *null* will force nullify and a null value will be keeped as null, independing of the cast type;
+
 ## [0.1.6] - 2021-04-22
 
 ### Changed
@@ -49,6 +55,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Added
 
 - Initial version;
+
+[0.1.7]: https://github.com/rentalhost/vanilla-type/compare/0.1.6..0.1.7
 
 [0.1.6]: https://github.com/rentalhost/vanilla-type/compare/0.1.5..0.1.6
 

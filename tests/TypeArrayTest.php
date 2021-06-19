@@ -102,6 +102,9 @@ class TypeArrayTest
 
         $type->preferredNumbers[3] = [ 'number' => 4 ];
         static::assertInstanceOf(NumberType::class, $type->preferredNumbers[3]);
+
+        assert($type->preferredNumbers[3] instanceof NumberType);
+
         static::assertSame(4, $type->preferredNumbers[3]->number);
     }
 
@@ -128,6 +131,8 @@ class TypeArrayTest
         static::assertSame(1, $type->preferredNumbers[0]->number);
 
         $type->preferredNumbers[0] = [ 'number' => 2 ];
+
+        assert($type->preferredNumbers[0] instanceof NumberType);
 
         static::assertSame(2, $type->preferredNumbers[0]->number);
     }

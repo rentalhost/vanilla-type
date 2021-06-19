@@ -7,6 +7,7 @@ namespace Rentalhost\Vanilla\Type\Tests;
 use PHPUnit\Framework\TestCase;
 use Rentalhost\Vanilla\Type\Tests\Fixture\Traits\UserTypeExampleTrait;
 use Rentalhost\Vanilla\Type\Tests\Fixture\Types\ColorType;
+use Rentalhost\Vanilla\Type\Tests\Fixture\Types\NativeType;
 use Rentalhost\Vanilla\Type\Tests\Fixture\Types\NonType;
 use Rentalhost\Vanilla\Type\Tests\Fixture\Types\UserType;
 use Rentalhost\Vanilla\Type\TypeArray;
@@ -15,6 +16,38 @@ class TypeTest
     extends TestCase
 {
     use UserTypeExampleTrait;
+
+    public function dataProviderNativeCasting(): array
+    {
+        $arrayExample  = [ 'example' => true ];
+        $objectExample = (object) $arrayExample;
+
+        return [
+            [ 'string', 'string', 'string' ],
+            [ 'stringNullable', null, null ],
+
+            [ 'int', 123.45, 123 ],
+            [ 'intNullable', null, null ],
+            [ 'integer', 123.45, 123 ],
+
+            [ 'float', 123.45, 123.45 ],
+            [ 'floatNullable', null, null ],
+            [ 'double', 123.45, 123.45 ],
+
+            [ 'bool', true, true ],
+            [ 'boolNullable', null, null ],
+            [ 'boolean', false, false ],
+
+            [ 'array', $objectExample, $arrayExample ],
+            [ 'arrayNullable', null, null ],
+
+            [ 'object', $arrayExample, $objectExample ],
+            [ 'objectNullable', null, null ],
+
+            [ 'null', null, null ],
+            [ 'nullNonNull', 123.45, null ],
+        ];
+    }
 
     public function testArrayAccess(): void
     {
@@ -100,6 +133,12 @@ class TypeTest
 
         unset($type->basicString);
         static::assertFalse(isset($type->basicString));
+    }
+
+    /** @dataProvider dataProviderNativeCasting */
+    public function testNativeCasting(string $type, $value, $expectedValue): void
+    {
+        static::assertEquals($expectedValue, (new NativeType([ $type => $value ]))->get($type));
     }
 
     public function testObjectAccess(): void

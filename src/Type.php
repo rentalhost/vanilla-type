@@ -14,13 +14,15 @@ abstract class Type
 {
     use ConstructorWithParentTrait;
 
+    private const NATIVE_TYPES = [ 'string', 'int', 'integer', 'float', 'double', 'boolean', 'bool', 'array', 'object', 'null' ];
+
     /** @var string[]|null */
     protected static ?array $arrayCasts = null;
 
     /** @var string[]|null */
     protected static ?array $casts = null;
 
-    /** @var array[] */
+    /** @var array */
     protected array $attributes = [];
 
     /** @var array|object[] */
@@ -38,10 +40,47 @@ abstract class Type
         }
     }
 
+    private static function processNativeType(string $castClass, $castValue)
+    {
+        if ($castValue === null) {
+            return null;
+        }
+
+        switch ($castClass) {
+            case 'string':
+                return (string) $castValue;
+
+            case 'int':
+            case 'integer':
+                return (int) $castValue;
+
+            case 'float':
+            case 'double':
+                return (float) $castValue;
+
+            case 'bool':
+            case 'boolean':
+                return (bool) $castValue;
+
+            case 'array':
+                return (array) $castValue;
+
+            case 'object':
+                return (object) $castValue;
+
+            default:
+                return null;
+        }
+    }
+
     private function processType(string $key, array $usingCastsArray)
     {
         $castClass = $usingCastsArray[$key];
         $castValue = $this->attributes[$key];
+
+        if (in_array($castClass, self::NATIVE_TYPES, true)) {
+            return $this->attributesProcessed[$key] = self::processNativeType($castClass, $castValue);
+        }
 
         $castInstance = is_a($castClass, ConstructorWithParentInterface::class, true)
             ? self::constructWithParent($castClass, $this, $castValue)
