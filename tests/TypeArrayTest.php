@@ -7,6 +7,7 @@ namespace Rentalhost\Vanilla\Type\Tests;
 use PHPUnit\Framework\TestCase;
 use Rentalhost\Vanilla\Type\Tests\Fixture\Traits\UserTypeExampleTrait;
 use Rentalhost\Vanilla\Type\Tests\Fixture\Types\NumberType;
+use Rentalhost\Vanilla\Type\Tests\Fixture\Types\NumberTypeArray;
 use Rentalhost\Vanilla\Type\Tests\Fixture\Types\UserType;
 
 class TypeArrayTest
@@ -33,6 +34,13 @@ class TypeArrayTest
         static::assertCount(3, $type->preferredNumbers);
         static::assertCount(3, $type->preferredNumbers->toArray());
         static::assertSame(3, $type->preferredNumbers->count());
+    }
+
+    public function testEmptyFreshTypeArray(): void
+    {
+        $typeArray = new NumberTypeArray([ null ]);
+
+        static::assertEmpty($typeArray[0]);
     }
 
     public function testGetDefault(): void

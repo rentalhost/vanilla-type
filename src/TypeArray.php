@@ -108,6 +108,10 @@ abstract class TypeArray
             return $this->itemsProcessed[$offset];
         }
 
+        if (!is_array($this->items[$offset])) {
+            return null;
+        }
+
         return $this->itemsProcessed[$offset] = static::$castTo::constructWithParent(static::$castTo, $this, $this->items[$offset]);
     }
 
