@@ -103,9 +103,12 @@ class TypeArrayTest
         $type->preferredNumbers[3] = [ 'number' => 4 ];
         static::assertInstanceOf(NumberType::class, $type->preferredNumbers[3]);
 
-        assert($type->preferredNumbers[3] instanceof NumberType);
+        /** @var NumberType $preferredNumber */
+        $preferredNumber = $type->preferredNumbers[3];
 
-        static::assertSame(4, $type->preferredNumbers[3]->number);
+        assert($preferredNumber instanceof NumberType);
+
+        static::assertSame(4, $preferredNumber->number);
     }
 
     public function testParentAccess(): void
@@ -132,9 +135,12 @@ class TypeArrayTest
 
         $type->preferredNumbers[0] = [ 'number' => 2 ];
 
-        assert($type->preferredNumbers[0] instanceof NumberType);
+        /** @var NumberType $preferredNumber */
+        $preferredNumber = $type->preferredNumbers[0];
 
-        static::assertSame(2, $type->preferredNumbers[0]->number);
+        assert($preferredNumber instanceof NumberType);
+
+        static::assertSame(2, $preferredNumber->number);
     }
 
     public function testToArrayAfterNestedSet(): void
