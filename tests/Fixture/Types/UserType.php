@@ -27,12 +27,12 @@ use Rentalhost\Vanilla\Type\TypeArray;
 class UserType
     extends Type
 {
-    protected static ?array $arrayCasts = [
+    protected static array|null $arrayCasts = [
         'preferredNumbers' => NumberTypeArray::class,
         'parentAccesses'   => ParentAccessesTypeArray::class,
     ];
 
-    protected static ?array $casts = [
+    protected static array|null $casts = [
         'preferredColor'  => ColorType::class,
         'nonType'         => NonType::class,
         'nonTypeCallable' => 'strval',

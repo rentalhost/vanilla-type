@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Rentalhost\Vanilla\Type\Tests\Fixture\Traits;
 
+use JetBrains\PhpStorm\ArrayShape;
 use Rentalhost\Vanilla\Type\Tests\Fixture\Types\UserType;
 
 trait UserTypeExampleTrait
@@ -13,6 +14,15 @@ trait UserTypeExampleTrait
         return new UserType(self::getUserTypeAttributes());
     }
 
+    #[ArrayShape([
+        'nonType'          => 'bool',
+        'nonTypeCallable'  => 'int',
+        'basicString'      => 'string',
+        'preferredColor'   => 'string[]',
+        'preferredNumbers' => 'int[][]',
+        'parentAccess'     => 'array',
+        'parentAccesses'   => 'array',
+    ])]
     private static function getUserTypeAttributes(): array
     {
         return [

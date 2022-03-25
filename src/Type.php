@@ -17,10 +17,10 @@ abstract class Type
     private const NATIVE_TYPES = [ 'string', 'int', 'integer', 'float', 'double', 'boolean', 'bool', 'array', 'object', 'null' ];
 
     /** @var string[]|null */
-    protected static ?array $arrayCasts = null;
+    protected static array|null $arrayCasts = null;
 
     /** @var string[]|null */
-    protected static ?array $casts = null;
+    protected static array|null $casts = null;
 
     /** @var array */
     protected array $attributes = [];
@@ -28,10 +28,9 @@ abstract class Type
     /** @var array|object[] */
     protected array $attributesProcessed = [];
 
-    /** @var Type|TypeArray|null */
-    public $parent;
+    public Type|TypeArray|null $parent = null;
 
-    public function __construct(?array $attributes = null)
+    public function __construct(array|null $attributes = null)
     {
         if ($attributes) {
             foreach ($attributes as $key => $value) {
@@ -46,31 +45,15 @@ abstract class Type
             return null;
         }
 
-        switch ($castClass) {
-            case 'string':
-                return (string) $castValue;
-
-            case 'int':
-            case 'integer':
-                return (int) $castValue;
-
-            case 'float':
-            case 'double':
-                return (float) $castValue;
-
-            case 'bool':
-            case 'boolean':
-                return (bool) $castValue;
-
-            case 'array':
-                return (array) $castValue;
-
-            case 'object':
-                return (object) $castValue;
-
-            default:
-                return null;
-        }
+        return match ($castClass) {
+            'string'          => (string) $castValue,
+            'int', 'integer'  => (int) $castValue,
+            'float', 'double' => (float) $castValue,
+            'bool', 'boolean' => (bool) $castValue,
+            'array'           => (array) $castValue,
+            'object'          => (object) $castValue,
+            default           => null,
+        };
     }
 
     private function processType(string $key, array $usingCastsArray)
@@ -109,14 +92,12 @@ abstract class Type
         return $this;
     }
 
-    /** @return mixed */
-    public function __get(string $key)
+    public function __get(string $key): mixed
     {
         return $this->get($key);
     }
 
-    /** @param mixed $value */
-    public function __set(string $key, $value): void
+    public function __set(string $key, mixed $value): void
     {
         $this->offsetSet($key, $value);
     }
@@ -136,8 +117,7 @@ abstract class Type
         return new static($this->toArray());
     }
 
-    /** @return mixed */
-    public function get(string $key, $default = null)
+    public function get(string $key, $default = null): mixed
     {
         if (!$this->offsetExists($key)) {
             return $default;
@@ -176,21 +156,12 @@ abstract class Type
         return isset($this->attributes[$offset]);
     }
 
-    /**
-     * @param string $offset
-     *
-     * @return mixed
-     */
-    public function offsetGet($offset)
+    public function offsetGet(mixed $offset): mixed
     {
         return $this->get($offset);
     }
 
-    /**
-     * @param string $offset
-     * @param mixed  $offset
-     */
-    public function offsetSet($offset, $value): void
+    public function offsetSet(mixed $offset, $value): void
     {
         $this->attributes[$offset] = $value;
 
@@ -211,7 +182,7 @@ abstract class Type
         return $this->attributes;
     }
 
-    public function toJson(?int $options = null): string
+    public function toJson(int|null $options = null): string
     {
         return json_encode($this->jsonSerialize(), ($options ?? 0) | JSON_THROW_ON_ERROR);
     }

@@ -28,7 +28,7 @@ use Rentalhost\Vanilla\Type\Type;
 class NativeType
     extends Type
 {
-    protected static ?array $casts = [
+    protected static array|null $casts = [
         'string'         => 'string',
         'stringNullable' => 'string',
         'int'            => 'int',

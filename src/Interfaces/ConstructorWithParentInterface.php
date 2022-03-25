@@ -9,10 +9,6 @@ use Rentalhost\Vanilla\Type\TypeArray;
 
 interface ConstructorWithParentInterface
 {
-    /**
-     * @param Type|TypeArray $classParent
-     *
-     * @return static
-     */
-    public static function constructWithParent(string $class, $classParent, array $attributesOrItems);
+    /** @return static */
+    public static function constructWithParent(string $class, Type|TypeArray $classParent, array $attributesOrItems);
 }

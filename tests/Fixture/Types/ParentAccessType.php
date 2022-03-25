@@ -13,7 +13,7 @@ use Rentalhost\Vanilla\Type\Type;
 class ParentAccessType
     extends Type
 {
-    public function __construct(?array $attributes = null)
+    public function __construct(array|null $attributes = null)
     {
         parent::__construct($attributes);
 

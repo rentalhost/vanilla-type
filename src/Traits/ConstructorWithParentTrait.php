@@ -10,7 +10,7 @@ use Rentalhost\Vanilla\Type\TypeArray;
 
 trait ConstructorWithParentTrait
 {
-    public static function constructWithParent(string $class, $classParent, array $attributesOrItems)
+    public static function constructWithParent(string $class, Type|TypeArray $classParent, array $attributesOrItems)
     {
         /** @var Type|TypeArray $classInstance */
         $classInstance         = (new ReflectionClass($class))->newInstanceWithoutConstructor();

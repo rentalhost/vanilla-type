@@ -15,7 +15,7 @@ class ParentAccessesTypeArray
 {
     public static string $castTo = ParentAccessType::class;
 
-    public function __construct(?array $items = null)
+    public function __construct(array|null $items = null)
     {
         parent::__construct($items);
 

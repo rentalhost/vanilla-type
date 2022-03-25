@@ -16,7 +16,6 @@ abstract class TypeArray
 {
     use ConstructorWithParentTrait;
 
-    /** @var string|Type */
     public static string $castTo;
 
     protected array $items;
@@ -25,7 +24,7 @@ abstract class TypeArray
 
     public Type $parent;
 
-    public function __construct(?array $items = null)
+    public function __construct(array|null $items = null)
     {
         assert(is_a(static::$castTo, Type::class, true));
 
@@ -51,7 +50,7 @@ abstract class TypeArray
         return count($this->items);
     }
 
-    public function current()
+    public function current(): mixed
     {
         return $this->offsetGet(key($this->items));
     }
@@ -76,10 +75,7 @@ abstract class TypeArray
         reset($this->items);
     }
 
-    /**
-     * @param string|int $key
-     */
-    public function get($key, $default = null): ?Type
+    public function get(string|int $key, $default = null): Type|null
     {
         if ($this->offsetExists($key)) {
             return $this->offsetGet($key);
@@ -98,7 +94,7 @@ abstract class TypeArray
         return array_key_exists($offset, $this->items);
     }
 
-    public function offsetGet($offset)
+    public function offsetGet(mixed $offset): mixed
     {
         if (!$this->offsetExists($offset)) {
             return null;
@@ -112,7 +108,10 @@ abstract class TypeArray
             return null;
         }
 
-        return $this->itemsProcessed[$offset] = static::$castTo::constructWithParent(static::$castTo, $this, $this->items[$offset]);
+        /** @var Type $castTo */
+        $castTo = static::$castTo;
+
+        return $this->itemsProcessed[$offset] = $castTo::constructWithParent(static::$castTo, $this, $this->items[$offset]);
     }
 
     public function offsetSet($offset, $value): void

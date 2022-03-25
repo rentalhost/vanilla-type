@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] - 2022-03-25
+
+### Changed
+
+- Minimum **PHP version** is now **8.1**;
+
 ## [0.1.9] - 2021-12-08
 
 ### Fixed
@@ -14,7 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Added
 
-- `Type::$casts` now supports casts to native types when value is *non-null* (*string*, *int* or *integer*, *float* or *double*, *bool* or *boolean*, *array*, *object*, *null*). The type *null* will force nullify and a null value will be keeped as null, independing of the cast type;
+- `Type::$casts` now supports casts to native types when value is *non-null* (*string*, *int* or *integer*, *float* or *double*, *bool* or *boolean*, *array*, *object*, *null*). The type *null* will force nullify and a null value will be kept as null, independent of the cast type;
 
 - `Type::$casts` now supports casts via a callable;
 
@@ -22,7 +28,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Changed
 
-- The `$parent` property is now fullfilled during the `Type::__construct()` and `TypeArray::__construct()` execution;
+- The `$parent` property is now fulfilled during the `Type::__construct()` and `TypeArray::__construct()` execution;
 
 ## [0.1.5] - 2021-03-04
 
@@ -63,6 +69,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Added
 
 - Initial version;
+
+[0.2.0]: https://github.com/rentalhost/vanilla-type/compare/0.1.9..0.2.0
 
 [0.1.9]: https://github.com/rentalhost/vanilla-type/compare/0.1.8..0.1.9
 
